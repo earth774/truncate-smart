@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Zero-dep, TypeScript-first string truncation with word boundary, HTML strip, and emoji safety",
   "type": "module",
   "main": "./dist/index.cjs",
