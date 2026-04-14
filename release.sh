@@ -55,6 +55,17 @@ if [[ ! "$CURRENT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   exit 1
 fi
 
+tag_exists() {
+  local candidate="$1"
+  if git rev-parse "$candidate" >/dev/null 2>&1; then
+    return 0
+  fi
+  if git ls-remote --exit-code --tags origin "refs/tags/$candidate" >/dev/null 2>&1; then
+    return 0
+  fi
+  return 1
+}
+
 IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
 case "$BUMP_TYPE" in
   patch)
@@ -73,15 +84,15 @@ esac
 
 NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
 TAG="v${NEW_VERSION}"
+ORIGINAL_TAG="$TAG"
+while tag_exists "$TAG"; do
+  PATCH=$((PATCH + 1))
+  NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+  TAG="v${NEW_VERSION}"
+done
 
-if git rev-parse "$TAG" >/dev/null 2>&1; then
-  echo "Error: tag $TAG already exists locally."
-  exit 1
-fi
-
-if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
-  echo "Error: tag $TAG already exists on origin."
-  exit 1
+if [[ "$TAG" != "$ORIGINAL_TAG" ]]; then
+  echo "Info: $ORIGINAL_TAG already exists, using next available tag $TAG."
 fi
 
 echo "Running checks..."
