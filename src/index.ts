@@ -1,0 +1,5 @@
+export type { TruncateOptions } from "./types.js"
+export { createTruncator } from "./createTruncator.js"
+export { truncate } from "./truncate.js"
+export { truncateAll } from "./truncateAll.js"
+export { stripHtml } from "./stripHtml.js"
