@@ -5,6 +5,10 @@
   },
   "version": "0.1.3",
   "description": "Zero-dep, TypeScript-first string truncation with word boundary, HTML strip, and emoji safety",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/earth774/truncate-smart"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
