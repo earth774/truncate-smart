@@ -42,9 +42,36 @@ if [[ "$CURRENT_BRANCH" != "main" ]]; then
   exit 1
 fi
 
-if [[ -n "$(git status --porcelain package.json release.sh .github/workflows/publish.yml)" ]]; then
-  echo "Error: package.json, release.sh, or publish workflow has uncommitted changes."
-  echo "Please commit or stash them before running release."
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "Error: working tree is not clean."
+  echo "Please commit or stash all changes before running release."
+  exit 1
+fi
+
+if ! git remote get-url origin >/dev/null 2>&1; then
+  echo "Error: git remote 'origin' is not configured."
+  exit 1
+fi
+
+echo "Fetching origin/main..."
+if ! git fetch origin main; then
+  echo "Error: failed to fetch origin/main. Check network and remote access."
+  exit 1
+fi
+
+if ! git rev-parse --verify origin/main >/dev/null 2>&1; then
+  echo "Error: origin/main not found after fetch."
+  exit 1
+fi
+
+LOCAL_SHA="$(git rev-parse HEAD)"
+REMOTE_SHA="$(git rev-parse origin/main)"
+if [[ "$LOCAL_SHA" != "$REMOTE_SHA" ]]; then
+  echo "Error: local main is not in sync with origin/main."
+  echo "  local:  $LOCAL_SHA ($(git rev-parse --short HEAD))"
+  echo "  remote: $REMOTE_SHA ($(git rev-parse --short origin/main))"
+  echo "Pull latest with: git pull --ff-only origin main"
+  echo "If you have unpushed commits, push or integrate them before releasing."
   exit 1
 fi
 
