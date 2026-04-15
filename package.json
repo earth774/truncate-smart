@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Zero-dep, TypeScript-first string truncation with word boundary, HTML strip, and emoji safety",
   "repository": {
     "type": "git",
