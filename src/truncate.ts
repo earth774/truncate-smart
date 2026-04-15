@@ -117,9 +117,6 @@ export function truncate(
   }
 
   const contentMax = max - suffixLengthUnits
-  if (contentMax <= 0) {
-    return suffix
-  }
 
   let sliced: string
   if (wordBoundary && locale) {

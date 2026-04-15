@@ -8,4 +8,5 @@
 - The workspace follows `CLAUDE.md` conventions, including strict TypeScript and small single-purpose modules under `src/`.
 - Standard verification gate is `pnpm typecheck && pnpm test && pnpm lint && pnpm build`.
 - Package publishing targets npm scope `@amiearth/truncate-smart`.
-- GitHub Actions publish flow is defined in `.github/workflows/publish.yml` and uses release tags (`v*.*.*`) plus manual dispatch.
+- GitHub Actions publish flow is in `.github/workflows/publish.yml` (tags `v*.*.*` and manual dispatch); local version bumps use `pnpm release:patch|minor|major` via `release.sh`, then push the matching tag.
+- Continuous integration for pushes to `main` and pull requests is in `.github/workflows/ci.yml` and runs `pnpm typecheck && pnpm test:coverage && pnpm lint && pnpm build` (Vitest coverage thresholds apply).

@@ -50,4 +50,19 @@ describe("edge cases", () => {
     const r = truncate(s, 2, { emojiSafe: false, wordBoundary: false, suffix: "" })
     expect(r).toBe("a\uD800".slice(0, 2))
   })
+
+  it("treats non-finite maxLength as zero and returns the suffix when content would exceed it", () => {
+    expect(truncate("hello", Number.NaN)).toBe("...")
+    expect(truncate("hello", Number.POSITIVE_INFINITY)).toBe("...")
+  })
+
+  it("ignores empty strings in preserveWords", () => {
+    expect(
+      truncate("hello world", 8, {
+        wordBoundary: false,
+        emojiSafe: false,
+        preserveWords: ["", "world"],
+      }),
+    ).toBe("hello...")
+  })
 })
