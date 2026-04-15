@@ -1,17 +1,21 @@
 # truncate-smart
 
-Zero-dependency, TypeScript-first string truncation. Handles word boundaries (including Thai/CJK via `Intl.Segmenter`), optional HTML tag stripping, grapheme-safe emoji boundaries, and protected substrings.
+Published on npm as **`@amiearth/truncate-smart`**. Zero-dependency, TypeScript-first string truncation. Handles word boundaries (including Thai/CJK via `Intl.Segmenter`), optional HTML tag stripping, grapheme-safe emoji boundaries, and protected substrings.
 
 ## Install
 
 ```bash
-pnpm add truncate-smart
+pnpm add @amiearth/truncate-smart
+# or
+yarn add @amiearth/truncate-smart
+# or
+npm install @amiearth/truncate-smart
 ```
 
 ## Quick start
 
 ```ts
-import { truncate, createTruncator, truncateAll, stripHtml } from "truncate-smart"
+import { truncate, createTruncator, truncateAll, stripHtml } from "@amiearth/truncate-smart"
 
 truncate("Hello world today", 14)
 // => "Hello world..."
