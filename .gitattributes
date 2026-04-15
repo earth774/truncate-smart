@@ -1,0 +1,2 @@
+# Avoid textual merges that can corrupt the lockfile (multiple YAML documents).
+pnpm-lock.yaml merge=binary
